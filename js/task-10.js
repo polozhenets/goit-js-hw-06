@@ -1,8 +1,3 @@
-let size=20;
-let i=0;
-
-
-
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
@@ -13,7 +8,8 @@ const btnCreate = document.querySelector('[data-create]');
 const btnDestroy = document.querySelector('[data-destroy]');
 
 btnCreate.addEventListener('click',()=>{
-  createBoxes(numb.value);
+  let boxes = createBoxes(numb.value);
+  mainBox.append(...boxes);
   }
 )
 
@@ -23,25 +19,20 @@ btnDestroy.addEventListener('click',()=>{
 
 
 function destroyBoxes(){
-  i=0;
-  size=20;
-  while(mainBox.firstChild){
-    mainBox.removeChild(mainBox.lastChild);
-  }
+  mainBox.innerHTML = '';
 }
-
 
 function createBoxes(amount){
+  const boxes = [];
   
-  while(i<amount){
-    let box = document.createElement(`div`);
-    box.setAttribute('class',`box${i}`);
-    size+=10;
-    box.style.width=`${size}px`;
-    box.style.height=`${size}px`;
-    box.style.background=getRandomHexColor();
-    mainBox.appendChild(box);
-    i++;
+  for (let i = 0; i < amount; i++) {
+    const box = document.createElement('div');
+    box.style.width=`${30+10*i}px`;
+    box.style.height =`${30+10*i}px`;
+    box.style.background = getRandomHexColor();
+    boxes.push(box);
   }
-  
+
+  return boxes;
 }
+
